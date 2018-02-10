@@ -1,0 +1,14 @@
+pragma solidity ^0.4.0;
+contract array
+{
+    uint256 [] myarray;
+    
+    function get() public constant returns (uint256)
+    {
+        myarray.push(123);
+        myarray.push(5494);
+        delete myarray;
+        return myarray[1];
+    }
+    
+}
