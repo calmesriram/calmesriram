@@ -1,0 +1,88 @@
+pragma solidity ^0.4.0;
+contract test
+{
+  uint256 a=0;
+  uint256 b=0;
+  uint256 c=0;
+  uint256 [] arr;
+  function can1()public
+  {
+      a++;
+  }
+   function can2()public
+  {
+      b++; 
+  }
+  
+   function can3()public
+  { 
+      c++; 
+}
+  function votecount()public
+  {
+      /*if(1== choose)
+      {
+       arr.push(a);
+       return arr;
+      }
+       if(2== choose)
+      {
+       arr.push(b);
+       return arr;
+      }
+       if(3== choose)
+      {
+       arr.push(c);
+       return arr;
+      }*/
+      
+ 
+  }
+      function winne()public constant returns(string s)
+      {
+               arr.push(a);
+      arr.push(b);
+      arr.push(c); 
+      
+          if(arr[0]>arr[1] && arr[0]>arr[2])
+          {
+              s= "can1 is winner";
+              return s;
+          }
+            if(arr[1]>arr[0] && arr[1]>arr[2])
+          {
+              s= "can2 is winner";
+              return s;
+          }
+            if(arr[2]>arr[0] && arr[2]>arr[1])
+          {
+             s = "can3 is winner";
+              return s;
+          }
+      }
+}
+  
+ /* 
+  
+  */
+/*  
+  function candiresult(uint256 select)public constant returns(uint256)
+  {
+      select=1;
+      select=2;
+      select=3;
+   if(1 == select )
+   {
+       return arr[a];
+   }
+   else if(select ==2)
+   {
+       return b;
+   }
+   else if(select ==3)
+   {
+       return c;
+   }
+   
+  }
+  */
