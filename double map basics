@@ -1,0 +1,17 @@
+pragma solidity ^0.4.0;
+contract a
+{
+    struct detail
+    {
+        string name;
+        uint256 ph;
+    }
+    mapping(uint256 =>mapping (string =>detail))maps2;
+    
+    function name(uint256 m1,string m2,string _name)public constant returns(string)
+    {
+        maps2[m1][m2].name = _name;
+        
+        return( maps2[m1][m2].name);
+    }
+}
