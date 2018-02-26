@@ -1,0 +1,40 @@
+
+pragma solidity ^0.4.0;
+contract librarya
+{
+ struct lib
+ {
+     string bookname;
+     uint256 bookid;
+     uint256 starttime;
+     uint256 endtime;
+     uint256 studentid;
+     uint256 studentname;
+     uint256 noofbooks;
+ }
+ mapping(address => lib)map;
+ function bookdetails(address book,uint256 bkid,string bkname,uint256 bknos)public
+ {
+      map[book].bookid = bkid;
+      map[book].bookname = bkname;
+      map[book].noofbooks = bknos;
+  }
+ function bookavailable(address book)public constant returns(uint256 ,string,uint256)
+ {
+    return (map[book].bookid,map[book].bookname,map[book].noofbooks);
+ }
+ 
+ function getbook(address book,uint256 bookid,uint256 taken) public payable returns(uint256,uint256)
+ {
+   map[book].bookid = bookid;
+   map[book].noofbooks -= taken;
+   map[book].starttime = now;
+   return (map[book].bookid,map[book].noofbooks);
+ }
+ function returnbook(address book,uint256 bookid,uint256 given)public payable returns(uint256,uint256)
+ {
+        map[book].bookid = bookid;
+        map[book].noofbooks += given;
+        return (map[book].bookid,map[book].noofbooks);
+ }
+}
