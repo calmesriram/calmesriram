@@ -1,0 +1,21 @@
+pragma solidity ^0.4.0;
+contract doumap{
+    struct det
+    {
+        string name;
+        uint256 id;
+        uint256 amount;
+    }
+    mapping(address => mapping(address => det))dmap;
+    function get(address con,address tmp,uint256 id, uint256 amount,string name)public// payable 
+    {
+        dmap[con][tmp].id= id;
+        dmap[con][tmp].amount= amount;
+        dmap[con][tmp].name= name;
+    }
+    
+    function print(address h1,address h2)public constant returns(uint256,uint256,string)
+    {
+        return(dmap[h1][h2].id,dmap[h1][h2].amount,dmap[h1][h2].name);
+    }
+}
