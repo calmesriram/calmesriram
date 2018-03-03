@@ -1,0 +1,44 @@
+pragma solidity ^0.4.0;
+contract ERC20_BANK_WALLET
+{
+    mapping (address => uint256)map;
+    mapping(address =>mapping(address=> uint256))set;
+    function Totalsupply(uint256 deposit)public
+    {
+        map[msg.sender] = deposit;
+    }
+    function Balanceof(address checkbal) public constant returns(uint256)
+    {
+       // if(checkbal!=0xca35b7d915458ef540ade6068dfe2f44e8fa733c)
+         return map[msg.sender];
+        // else
+//return (map[checkbal]);
+     }
+     function Transfer(address to,uint256 value)public
+    {
+      //  require(map[msg.sender]>value);
+        map[msg.sender]-=value;
+        map[to]+=value;
+     
+    }
+     function Approve(address spender,uint256 value)public 
+    {
+      //  require(map[msg.sender]>value);
+         set[msg.sender][spender]=value;
+    }
+    
+    function Transferfrom(address spender,address to,uint256 value) public 
+    { 
+        //require(set[msg.sender][spender]>value&&value<map[msg.sender]);
+        map[to]+=value;
+        set[msg.sender][spender]-= value;
+        map[msg.sender]-=value;
+    }
+    
+    function Allowance(address spender)public  returns(uint256)
+{
+          return set[msg.sender][spender];
+}
+   
+
+}
