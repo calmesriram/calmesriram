@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <meta charset="utf-8">
+    <title>TKsystem Tech </title>
+
+                                                   <center><h1> BANK SYSTEM</h1></center>
+
+//deposite
+
+<div style ="width:500px;height:100px;background:#F0F8FF;text-align:center"></br>
+<input type ="text" id="DepositAmount" placeholder="DepositAmount" style="height:20px"></br></br>
+<input type="button" value="Totalsupply" id="Totalsupply"></button></br></br></div>
+<pre id ="hashresult1"></pre>
+
+//balanceof
+
+<div style ="width:500px;height:100px;background:#808080;text-align:center"></br>
+<input type ="text" id="Bal" placeholder = "Balanceof" style ="height:20px"></br></br>
+<input type = "button" value = "Balanceof" id="Balanceof"></button></div>
+<pre id = "hashresult4"></pre>
+
+
+//transerfer to and value
+<div style =" width:500px;height:120px;text-align:center;background:Yellow"<center></br>
+<input type ="text"id="Transfer_to" placeholder="Transfer_to"></br></br>
+ <input type ="text" id= Transfer_value placeholder = "Transfer_value"></br></br>
+<input type = "button" value = "Transfer_toandvalue"id="Transfer_toandvalue"></button></centre> </br></br></div>
+<pre id ="hashresult2"></pre>
+
+//Approve
+<div style ="width:500px;height:200px;background:grey;text-align:center"><center></br>
+<input type ="text" id = "Address1" placeholder = "from address" style ="height:20px"></br></br>
+<input type ="text" id = "Address2" placeholder = "to address" style ="height:20px"></br></br>
+<input type = "button" value = "Approve" id="Approve"></centre>
+<pre id = "hashresult5"></pre>
+
+//transerfer from and to and value
+<div style = "background:#008000;width:500px;height:200px;text-align:center"<center></br></br>
+<input type = "text"id= "Transfer_from" placeholder="Transfer_from"></br></br>
+<input type ="text" id= "Transfer_to" placeholder = "Transfer_To"></br></br>
+<input type ="text" id= "Transfer_value" placeholder = "Transfer_value"></br></br>
+<input type ="button" value = "Transfer_from_to" id="Transfer_from_to"</button></centre></div>
+<pre id ="hashresult3"></pre>
+
+//Allowance
+<centre><div style ="width:500px;height:150px;background:grey;text-align:centre"></br>
+<input type ="text" id = "allow1" placeholder = "from address" style ="height:20px"></br></br>
+<input type ="text" id = "allow2" placeholder = "to address" style ="height:20px"></br></br>
+<input type = "button" value = "Allowance" id="Allowance"></centre>
+<pre id = "hashresult6"></pre>
+
+ </head>
+ <body style="background:#FFDAB9" >
+</body>
+<script>
+   
+        web3.eth.defaultAccount = web3.eth.accounts[0];
+        var sybexcon = web3.eth.contract([
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "checkbal",
+				"type": "address"
+			}
+		],
+		"name": "Balanceof",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "owner",
+				"type": "address"
+			},
+			{
+				"name": "spender",
+				"type": "address"
+			}
+		],
+		"name": "Allowance",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "spender",
+				"type": "address"
+			},
+			{
+				"name": "value",
+				"type": "uint256"
+			}
+		],
+		"name": "Approve",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "deposit",
+				"type": "uint256"
+			}
+		],
+		"name": "Totalsupply",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"name": "value",
+				"type": "uint256"
+			}
+		],
+		"name": "Transfer",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"name": "value",
+				"type": "uint256"
+			}
+		],
+		"name": "Transferfrom",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+]);
+
+     var sybex = sybexcon.at('0xa15861699f6971c1570edc6a421b3c6708f890c1');
+//totalsupply
+     var dep_amt = document.getElementById('DepositAmount');
+     var dep_bt = document.getElementById('Totalsupply');
+     var output1 = document.getElementById('hashresult1');
+
+//Balanceof
+
+     var bal_text = document.getElementById('Bal');
+     var bt_4 = document.getElementById('Balanceof');
+     var output4 = document.getElementById('hashresult4');
+
+//transfer to and value
+
+    var trnsto = document.getElementById('Transfer_to');
+    var trvalue = document.getElementById('Transfer_value');
+    var bt_2 = document.getElementById('Transfer_toandvalue');
+    var output2 = document.getElementById('hashresult2');
+
+// transfer from and to and value
+
+    var trfrom = document.getElementById('Transfer_from');
+    var trto = document.getElementById('Transfer_to');
+    var trtovalue = document.getElementById('Transfer_value');
+    var bt_3 = document.getElementById('Transfer_from_to');
+    var output3 = document.getElementById('hashresult3');
+//Approve
+
+    var textbox1 = document.getElementById('Address1');
+    var textbox2 = document.getElementById('Address2');
+    var bt_5 = document.getElementById('Approve');
+    var output5 = document.getElementById('hashresult5');
+
+
+//Allowance
+ 
+    var all_text1 = document.getElementById('allow1');
+    var all_box2 = document.getElementById('allow2');
+    var bt_6 = document.getElementById('Allowance');
+    var output6 = document.getElementById('hashresult6');
+
+ if(web3.isConnected()) {
+  
+        console.log("Ok");
+        
+      } else {
+        console.log("no");
+      }
+      web3.version.getNetwork((err, netId) => {
+            switch (netId) {
+              case "1":
+                console.log('This is mainnet')
+                break
+              case "2":
+                console.log('This is the deprecated Morden test network.')
+                break
+              case "3":
+                console.log('This is the ropsten test network.')
+                break
+              case "4":
+                console.log('This is the Rinkeby test network.')
+                break
+              case "42":
+                console.log('This is the Kovan test network.')
+                break
+              default:
+                console.log('This is an unknown network.')
+            }
+        })
+
+//--------------------------------------------------------------------------        
+        dep_bt.addEventListener('click',function()
+      {
+          return sybex.Totalsupply(dep_amt.value, function (error,result)
+         {
+            if (!error) 
+		{
+             
+              console.log(result);
+                             
+           	 } 
+		else 
+		{
+              
+               console.error(error);
+            	}
+          });
+      });
+//--------------------------------------------------------------------------  
+
+   
+     bt_4.addEventListener('click',function()
+      {
+          return sybex.Balanceof(bal_text.value, function (error,result)
+         {
+            if (!error) 
+		{
+             
+//              console.log(result);
+alert(result);
+                             
+           	 } 
+		else 
+		{
+              
+               console.error(error);
+            	}
+          });
+      });
+//--------------------------------------------------------------------------
+	bt_2.addEventListener('click',function()
+	{
+          return sybex.Transfer(trnsto.value,trvalue.value, function(error,result) 
+{
+  if(!error)
+{
+  
+  console.log(result);
+   }
+else
+{
+
+ 
+  console.log(error);
+}
+});
+});
+   
+//--------------------------------------------------------------------------  
+         bt_3.addEventListener('click',function()
+		{
+			return sybex.Transferfrom(trfrom.value,trto.value,trtovalue.value,function(error,result)
+		{
+		if(!error)
+			{
+				console.log(result);
+			}
+			 else
+			{
+			console.log(error);
+			}
+				});
+	});
+
+
+//--------------------------------------------------------------------------
+         bt_5.addEventListener('click',function()
+		{
+			return sybex.Approve(textbox1.value,textbox2.value,function(error,result)
+		{
+		if(!error)
+			{
+				console.log(result);
+			}
+			 else
+			{
+			console.log(error);
+			}
+				});
+	});
+
+//--------------------------------------------------------------------------
+      bt_6.addEventListener('click',function()
+		{
+			return sybex.Allowance(all_text1.value,all_box2.value,function(error,result)
+		{
+		if(!error)
+			{
+				console.log(result);
+			}
+			 else
+			{
+			console.log(error);
+			}
+				});
+	});
+</script>
+<p id="demo"></p>
+
+<script>
+document.getElementById("demo").innerHTML = Date();
+</script>
+
+</html>
