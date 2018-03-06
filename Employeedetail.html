@@ -1,0 +1,199 @@
+<!doctype html>
+<html>
+<head>
+ 
+  
+
+<title> Employee </title>
+
+ <div style ="background:yellow"><center><h1> EMPLOYEE DETAILS</h1> </center></div>
+
+</head>
+
+<body style = "background:#c0c0c0">
+
+<div style = "background:pink" text-align:center></br></br><center>
+<input type = "text"placeholder = "reg Address" id="reg1"></br></br>
+<input type = "text" placeholder = "Employee Number" id ="eid"></br></br>
+<input type = "text"placeholder = "Employee Name" id="ename"></br></br>
+<input type = "text"placeholder = "Employee Address1" id="eadd1"></br></br>
+<input type = "text"placeholder = "Employee Address2" id="eadd2"></br></br>
+<input type = "text"placeholder = "Employee Salary" id="esal"></br></br>
+<input type = "text"placeholder = "Employee Absent" id="eabst"></br></br>
+<input type = "text"placeholder = "Employee Bonus" id="ebonus"></br></br>
+<input type = "button" value = "save" onclick = "Generals()" onclick = "Sal()"></br></br>
+</center></div>
+
+</body>
+<script>
+	
+        web3.eth.defaultAccount = web3.eth.accounts[0];
+	var con = web3.eth.contract([
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "reg",
+				"type": "address"
+			},
+			{
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"name": "address1",
+				"type": "string"
+			},
+			{
+				"name": "address2",
+				"type": "string"
+			}
+		],
+		"name": "General",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "sal",
+				"type": "uint256"
+			},
+			{
+				"name": "absent",
+				"type": "uint256"
+			},
+			{
+				"name": "bonus",
+				"type": "uint256"
+			}
+		],
+		"name": "Sal_cal",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "reg",
+				"type": "address"
+			}
+		],
+		"name": "outup",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]);
+
+ 	 var addcon = con.at('0xde83884ec1e9f9fe0b2d29dc217133fa8ee61bf7');
+		 if(web3.isConnected())
+			{
+ 			  console.log("ok");
+			}
+			else
+			{
+			  console.log("no");
+			}
+
+	  web3.version.getNetwork((err, netId) => {
+            switch (netId) {
+              case "1":
+                console.log('This is mainnet')
+                break
+              case "2":
+                console.log('This is the deprecated Morden test network.')
+                break
+              case "3":
+                console.log('This is the ropsten test network.')
+                break
+              case "4":
+                console.log('This is the Rinkeby test network.')
+                break
+              case "42":
+                console.log('This is the Kovan test network.')
+                break
+              default:
+                console.log('This is an unknown network.')
+            }
+        })
+
+function Generals()
+{
+ var  regad = document.getElementById('reg1');
+   var  empid = document.getElementById('eid');
+   var  empname = document.getElementById('ename');
+   var  empadd1 = document.getElementById('eadd1');
+   var  empadd2 = document.getElementById('eadd2');
+        return addcon.General(regad.value,empid.value,empname.value,empadd1.value,empadd2.value, function(error,result){
+	if(!error)
+		{
+			alert(result);
+		}
+		else
+		{
+			alert(error);
+		}
+	});
+}   
+
+function Sal()
+{
+  var  empsal = document.getElementById('esal');
+   var  empabst = document.getElementById('eabst');
+   var  empbonus = document.getElementById('ebonus');
+
+        return addcon.Sal_cal(empsal.value,empabst.value,empbonus.value, function(error,result){
+	if(!error)
+		{
+			alert(result);
+		}
+		else
+		{
+			alert(error);
+		}
+	});
+}         
+</script>
+
+</html>
