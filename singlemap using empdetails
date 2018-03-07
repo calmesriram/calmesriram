@@ -1,0 +1,251 @@
+html
+=========================
+<!doctype html>
+<html>
+<head>
+ 
+  
+
+<title> Employee </title>
+
+ <div style ="background:yellow"><center><h1> EMPLOYEE DETAILS</h1> </center></div>
+
+</head>
+
+<body style = "background:steelblue">
+
+<div style = "background:#e8f3f8" text-align:center></br></br><center>
+<input type = "text"placeholder = "reg Address" id="reg"></br></br>
+<input type = "text" placeholder = "Employee Number" id ="eid"></br></br>
+<input type = "text"placeholder = "Employee Name" id="ename"></br></br>
+<input type = "text"placeholder = "Employee Address1" id="eadd1"></br></br>
+<input type = "text"placeholder = "Employee Address2" id="eadd2"></br></br>
+<input type = "text"placeholder = "Employee Salary" id="esal"></br></br>
+<input type = "text"placeholder = "Employee Absent" id="eabst"></br></br>
+<input type = "text"placeholder = "Employee Bonus" id="ebonus"></br></br>
+<input type = "button" value = "save" onclick = "Generals()"></br></br>
+<input type = "button" value = "view"onclick = "Read()"></br></br>
+
+
+
+</center></div>
+
+</body>
+<script>
+	
+        web3.eth.defaultAccount = web3.eth.accounts[0];
+	var con = web3.eth.contract([
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "reg",
+				"type": "address"
+			}
+		],
+		"name": "Read",
+		"outputs": [
+			{
+				"name": "emp_id",
+				"type": "uint256"
+			},
+			{
+				"name": "emp_name",
+				"type": "string"
+			},
+			{
+				"name": "emp_address1",
+				"type": "string"
+			},
+			{
+				"name": "emp_address2",
+				"type": "string"
+			},
+			{
+				"name": "emp_salary",
+				"type": "uint256"
+			},
+			{
+				"name": "emp_absent",
+				"type": "uint256"
+			},
+			{
+				"name": "emp_bonus",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "reg",
+				"type": "address"
+			},
+			{
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"name": "address1",
+				"type": "string"
+			},
+			{
+				"name": "address2",
+				"type": "string"
+			},
+			{
+				"name": "sal",
+				"type": "uint256"
+			},
+			{
+				"name": "absent",
+				"type": "uint256"
+			},
+			{
+				"name": "bonus",
+				"type": "uint256"
+			}
+		],
+		"name": "General",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+]);
+
+ 	 var addcon = con.at('0x7ebfed1a65836523f4e87fa64686efbd9ed0effa');
+		 if(web3.isConnected())
+			{
+ 			  console.log("ok");
+			}
+			else
+			{
+			  console.log("no");
+			}
+
+	  web3.version.getNetwork((err, netId) => {
+            switch (netId) {
+              case "1":
+                console.log('This is mainnet')
+                break
+              case "2":
+                console.log('This is the deprecated Morden test network.')
+                break
+              case "3":
+                console.log('This is the ropsten test network.')
+                break
+              case "4":
+                console.log('This is the Rinkeby test network.')
+                break
+              case "42":
+                console.log('This is the Kovan test network.')
+                break
+              default:
+                console.log('This is an unknown network.')
+            }
+        })
+
+function Generals()
+{
+   var  regad = document.getElementById('reg');
+   var  empid = document.getElementById('eid');
+   var  empname = document.getElementById('ename');
+   var  empadd1 = document.getElementById('eadd1');
+   var  empadd2 = document.getElementById('eadd2');
+   var  empsal = document.getElementById('esal');
+   var  empabst = document.getElementById('eabst');
+   var  empbonus = document.getElementById('ebonus');
+
+        return addcon.General(regad.value,empid.value,empname.value,empadd1.value,empadd2.value,empsal.value,empabst.value,empbonus.value, function(error,result){
+	if(!error)
+		{
+		 alert(result);
+                    
+		}
+		else
+		{
+			alert(error);
+		}
+	});
+}
+
+function Read()
+{
+  var  r = document.getElementById('reg').value;
+ 
+        return addcon.Read(r,function(error,result){
+	if(!error)
+		{
+			//document.getElementById('reg').value = result[0];
+			document.getElementById('eid').value = result[0];
+			document.getElementById('ename').value = result[1];
+			document.getElementById('eadd1').value = result[2];
+			document.getElementById('eadd2').value = result[3];
+			document.getElementById('esal').value = result[4];
+			document.getElementById('eabst').value = result[5];
+			document.getElementById('ebonus').value = result[6];
+					
+		}
+		else
+		{
+			alert(error);
+		}
+	});
+}	
+         
+</script>
+
+</html>
+=====================================================================================================
+pragma solidity ^0.4.0;
+contract cal
+{
+    struct salary
+    {
+        uint256 emp_id;
+        string emp_name;
+        string emp_address1;
+        string emp_address2;
+        uint256 emp_salary;
+        uint256 emp_overtime;
+        uint256 emp_absent;
+        uint256 emp_lop;
+        uint256 emp_bonus;
+        uint256  emp_annum;
+    }
+    mapping(address => salary)singlemap;
+    function General(address reg,uint256 id,string name,string address1,string address2,uint256 sal,uint256 absent,uint256 bonus)public
+    {
+        singlemap[reg].emp_id = id;
+        singlemap[reg].emp_name = name;
+        singlemap[reg].emp_address1 =address1;
+        singlemap[reg].emp_address2 = address2;
+        
+         if(absent ==0)
+       {
+        singlemap[reg].emp_salary = sal+bonus;
+        singlemap[reg].emp_id = singlemap[reg].emp_id;
+       }
+       else
+       {
+           singlemap[reg].emp_salary = sal+bonus;
+           singlemap[reg].emp_lop = absent +(singlemap[reg].emp_salary/30);
+            singlemap[reg].emp_salary =  (singlemap[reg].emp_salary - singlemap[reg].emp_lop);
+            
+       }
+    }
+
+    function Read(address reg)public constant returns(uint256 emp_id,string emp_name,string emp_address1,string emp_address2,uint256 emp_salary,uint256 emp_absent,uint256 emp_bonus)
+    {
+        return (singlemap[reg].emp_id,singlemap[reg].emp_name,singlemap[reg].emp_address1,singlemap[reg].emp_address2,singlemap[reg].emp_salary,singlemap[reg].emp_absent,singlemap[reg].emp_bonus);
+    }
+}
