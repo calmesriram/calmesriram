@@ -1,0 +1,43 @@
+pragma solidity ^0.4.0;
+contract cal
+{
+    struct salary
+    {
+        uint256 emp_id;
+        string emp_name;
+        string emp_address1;
+        string emp_address2;
+        uint256 emp_salary;
+        uint256 emp_overtime;
+        uint256 emp_absent;
+        uint256 emp_lop;
+        uint256 emp_bonus;
+        uint256  emp_annum;
+    }
+    mapping(address => salary)singlemap;
+    function General(address reg,uint256 id,string name,string address1,string address2,uint256 sal,uint256 absent,uint256 bonus)public
+    {
+        singlemap[reg].emp_id = id;
+        singlemap[reg].emp_name = name;
+        singlemap[reg].emp_address1 =address1;
+        singlemap[reg].emp_address2 = address2;
+        
+         if(absent ==0)
+       {
+        singlemap[reg].emp_salary = sal+bonus;
+        singlemap[reg].emp_id = singlemap[reg].emp_id;
+       }
+       else
+       {
+           singlemap[reg].emp_salary = sal+bonus;
+           singlemap[reg].emp_lop = absent +(singlemap[reg].emp_salary/30);
+            singlemap[reg].emp_salary =  (singlemap[reg].emp_salary - singlemap[reg].emp_lop);
+            
+       }
+    }
+
+    function Read(address reg)public constant returns(uint256 emp_id,string emp_name,string emp_address1,string emp_address2,uint256 emp_salary,uint256 emp_absent,uint256 emp_bonus)
+    {
+        return (singlemap[reg].emp_id,singlemap[reg].emp_name,singlemap[reg].emp_address1,singlemap[reg].emp_address2,singlemap[reg].emp_salary,singlemap[reg].emp_absent,singlemap[reg].emp_bonus);
+    }
+}
