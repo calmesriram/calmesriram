@@ -1,0 +1,229 @@
+<!doctype html>
+<html>
+<head>
+ 
+  
+
+<title> Employee </title>
+
+ <div style ="background:yellow"><center><h1> EMPLOYEE DETAILS</h1> </center></div>
+
+</head>
+
+<body style = "background:steelblue">
+
+<form name="addtext" onsubmit="download(this['name'].value, this['reg'].value,this['eid'].value,this['ename'].value,this['eadd1'].value,this['eadd2'].value,this['esal'].value,this['eabst'].value,this['ebonus'].value)"></br></br>	
+
+<div style = "background:#e8f3f8" text-align:center></br></br><center>
+<input type = "text"placeholder = "reg Address" id="reg" name="name"></br></br>
+<input type = "text" placeholder = "Employee Number" id ="eid"></br></br>
+<input type = "text"placeholder = "Employee Name" id="ename"></br></br>
+<input type = "text"placeholder = "Employee Address1" id="eadd1"></br></br>
+<input type = "text"placeholder = "Employee Address2" id="eadd2"></br></br>
+<input type = "text"placeholder = "Employee Salary" id="esal"></br></br>
+<input type = "text"placeholder = "Employee Absent" id="eabst"></br></br>
+<input type = "text"placeholder = "Employee Bonus" id="ebonus"></br></br>
+
+<input type = "button" value = "save" onclick = "Generals()">
+<input type = "button" value = "Read" onclick = "Read()"></br></br>
+
+
+<input type="submit" onClick="addTexttxt();" value="Save As Textfile"></form>
+
+
+
+</center></div>
+
+</body>
+<script>
+
+	
+        web3.eth.defaultAccount = web3.eth.accounts[0];
+	var con = web3.eth.contract([
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "reg",
+				"type": "address"
+			}
+		],
+		"name": "Read",
+		"outputs": [
+			{
+				"name": "emp_id",
+				"type": "uint256"
+			},
+			{
+				"name": "emp_name",
+				"type": "string"
+			},
+			{
+				"name": "emp_address1",
+				"type": "string"
+			},
+			{
+				"name": "emp_address2",
+				"type": "string"
+			},
+			{
+				"name": "emp_salary",
+				"type": "uint256"
+			},
+			{
+				"name": "emp_absent",
+				"type": "uint256"
+			},
+			{
+				"name": "emp_bonus",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "reg",
+				"type": "address"
+			},
+			{
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"name": "address1",
+				"type": "string"
+			},
+			{
+				"name": "address2",
+				"type": "string"
+			},
+			{
+				"name": "sal",
+				"type": "uint256"
+			},
+			{
+				"name": "absent",
+				"type": "uint256"
+			},
+			{
+				"name": "bonus",
+				"type": "uint256"
+			}
+		],
+		"name": "General",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+]);
+
+ 	 var addcon = con.at('0x9fb71e2d2f7f64903408930a9efdde43335f63b0');
+		 if(web3.isConnected())
+			{
+ 			  console.log("ok");
+			}
+			else
+			{
+			  console.log("no");
+			}
+
+	  web3.version.getNetwork((err, netId) => {
+            switch (netId) {
+              case "1":
+                console.log('This is mainnet')
+                break
+              case "2":
+                console.log('This is the deprecated Morden test network.')
+                break
+              case "3":
+                console.log('This is the ropsten test network.')
+                break
+              case "4":
+                console.log('This is the Rinkeby test network.')
+                break
+              case "42":
+                console.log('This is the Kovan test network.')
+                break
+              default:
+                console.log('This is an unknown network.')
+            }
+        })
+
+function Generals()
+{
+   var  regad = document.getElementById('reg');
+   var  empid = document.getElementById('eid');
+   var  empname = document.getElementById('ename');
+   var  empadd1 = document.getElementById('eadd1');
+   var  empadd2 = document.getElementById('eadd2');
+   var  empsal = document.getElementById('esal');
+   var  empabst = document.getElementById('eabst');
+   var  empbonus = document.getElementById('ebonus');
+
+        return addcon.General(regad.value,empid.value,empname.value,empadd1.value,empadd2.value,empsal.value,empabst.value,empbonus.value,function(error,result){
+	if(!error)
+		{
+		 alert(result);
+                    
+		}
+		else
+		{
+			alert(error);
+		}
+	});
+}
+
+function Read()
+{
+  var  r = document.getElementById('reg').value;
+ 
+        return addcon.Read(r, function(error,result){
+	if(!error)
+		{
+			document.getElementById('eid').value = result[0];
+			document.getElementById('ename').value = result[1];
+			document.getElementById('eadd1').value = result[2];
+			document.getElementById('eadd2').value = result[3];
+			document.getElementById('esal').value = result[4];
+			document.getElementById('eabst').value = result[5];
+			document.getElementById('ebonus').value = result[6];
+					
+		}
+		else
+		{
+			alert(error);
+		}
+	});
+}
+
+
+
+function download(filename, text1,text2,text3,text4,text5,text6,text7,text8) 
+{
+  var pom = document.createElement('a');
+  pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text1)+" "+encodeURIComponent(text2)+" "+encodeURIComponent(text3)+" "+encodeURIComponent(text4)+" "+encodeURIComponent(text5)+" "+encodeURIComponent(text6)+" "+encodeURIComponent(text7)+" "+encodeURIComponent(text8));
+  pom.setAttribute('download', filename);
+  pom.click();
+ 
+}   
+
+function addTextTXT()
+{
+    document.addtext.name.value = document.addtext.name.value + ".txt"
+}
+
+
+     
+</script>
+
+</html>
