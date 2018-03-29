@@ -1,0 +1,81 @@
+<html>
+        <head><center></head>
+                <meta charset="utf-8">
+                <title>test</title>
+                <link rel="stylesheet" href="app/stylesheets/bootstrap.min.css">
+                <script src="app/javascript/jquery.min.js"></script>
+                 <script src="app/javascript/bootstrap.min.js"></script>
+             <style>
+            
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 10%;
+    position: fixed;
+    bottom:750px;
+    left: 50%;
+    margin-left: -104.5px;
+}
+button:hover {
+    opacity: 0.8;
+}
+body{
+  background-image: url('app/images.png');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center; 
+}
+                </style>
+                <body onload="plug()" ><br><br><br>
+                  <center>
+                    
+                   <br><br><br>
+                  <b><h1>Bank as Wallet</h1></b><br><br><br>
+                  
+                 <form action="app/bankregistration.html">
+                    <!-- <button class="btn btn-success">START PROCESS</button> -->
+                    <input type="submit" class="btn btn-success" value="START PROCESS"  onclick="getNavigationPage();"/>
+                 </form>
+                 </center>
+<script>
+function plug()
+{
+	 if (typeof web3 !== 'undefined')
+        {
+            web3 = new Web3(web3.currentProvider);
+            alert("Metamask Plugged in.....")
+            check();
+        }
+       else
+        {
+               alert("First You need to install meta mask");
+	       window.location.assign("https://metamask.io/")
+               return;
+        }
+}
+function check()
+{
+// Checking if Web3 has been injected by the browser (Mist/MetaMask)
+// Use Mist/MetaMask's provider
+window.web3 = new Web3(web3.currentProvider); 
+if (web3.currentProvider.isMetaMask === true) {
+if (typeof web3.eth.defaultAccount === 'undefined')
+ {
+          alert('Oops! You Need to Unlock your Account');
+ }
+else
+ {
+      alert("Metamask is Unlocked");
+  }
+}
+}
+function getNavigationPage(){
+  window.location("app/bankregistration.html");
+}
+</script>
+</body>
+</html>
